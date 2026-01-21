@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+RUST_VER = 1.83
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	mkdir -p .bin .cargo
+	cp debian/cargo-config.toml .cargo/config.toml
+	cp debian/Makefile .
+	ln -sf $$(command -v   cargo-$(RUST_VER)) .bin/cargo
+	ln -sf $$(command -v   rustc-$(RUST_VER)) .bin/rustc
+	ln -sf $$(command -v rustfmt-$(RUST_VER)) .bin/rustfmt
+
+override_dh_auto_build:
+	PATH=$$PATH:$(CURDIR)/.bin dh_auto_build
+
+override_dh_auto_install:
+	dh_auto_install -- PREFIX=/usr
+
+override_dh_clean:
+	dh_clean --exclude=vendor
+	rm -rf .bin .cargo

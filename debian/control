@@ -1,0 +1,28 @@
+Source: xwayland-satellite
+Section: x11
+Priority: optional
+Maintainer: Dimitry Ishenko <dimitry.ishenko@gmail.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ cargo:native (>= 1.83) | cargo-1.83:native,
+ libclang-dev,
+ libxcb-cursor-dev,
+ libxcb1-dev,
+ pkgconf,
+ rustc:native (>= 1.83) | rustc-1.83:native,
+ xwayland (>= 23.1),
+Standards-Version: 4.6.2
+Vcs-Browser: https://github.com/Supreeeme/xwayland-satellite
+Vcs-Git: https://github.com/Supreeeme/xwayland-satellite.git
+
+Package: xwayland-satellite
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Xwayland outside your Wayland
+ xwayland-satellite grants rootless Xwayland integration to any Wayland
+ compositor implementing xdg_wm_base and viewporter. This is
+ particularly useful for compositors that (understandably) do not want
+ to go through implementing support for rootless Xwayland themselves.
